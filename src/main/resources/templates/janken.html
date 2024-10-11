@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>じゃんけんゲーム</title>
+</head>
+
+<body>
+  <h1 th:if="${username != null}">Hi <span th:text="${username}">ユーザー名</span>!</h1>
+
+  <h2>じゃんけんの手を選んでください</h2>
+  <ul>
+    <li><a href="/janken/play?choice=rock">グー</a></li>
+    <li><a href="/janken/play?choice=scissors">チョキ</a></li>
+    <li><a href="/janken/play?choice=paper">パー</a></li>
+  </ul>
+
+  <div th:if="${result != null}">
+    <p>あなたの手: <span th:text="${userHand}">-</span></p>
+    <p>相手の手: <span th:text="${cpuHand}">-</span></p>
+    <p>結果: <span th:text="${result}">-</span></p>
+  </div>
+</body>
+
+</html>

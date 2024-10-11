@@ -1,1 +1,17 @@
-応用演習
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>じゃんけんゲーム</title>
+</head>
+
+<body>
+  <h1>ユーザー名を入力してください</h1>
+  <form action="/janken" method="POST">
+    <label for="username">ユーザー名:</label>
+    <input type="text" id="username" name="username" required>
+    <button type="submit">参加</button>
+  </form>
+</body>
+
+</html>
