@@ -1,34 +1,42 @@
 package oit.is.z2489.kaizi.janken.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import oit.is.z2489.kaizi.janken.model.Janken;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class JankenController {
 
-  @PostMapping("/janken")
-  public String janken(@RequestParam String username, Model model) {
-    // ユーザー名をモデルに追加
+  @GetMapping("/janken")
+  public String showJanken(Model model, Authentication auth) {
+    String username = auth.getName(); // 認証されたユーザ名を取得
     model.addAttribute("username", username);
-    return "janken";
+    return "janken"; // templates/janken.html を返す
   }
 
-  @GetMapping("/janken/play")
-  public String playJanken(@RequestParam String choice, Model model) {
-    // じゃんけんのロジックを呼び出す
-    Janken janken = new Janken();
-    String cpuHand = janken.getCpuHand(); // CPUの手（例えば、固定で"rock"を返す）
-    String result = janken.judge(choice, cpuHand); // 勝敗の判定
+  @RequestMapping("/janken/result")
+  public String jankenResult(@RequestParam String hand, Model model) {
+    String cpuHand = "rock"; // CPUは常にグーを出す
+    String result;
 
-    // モデルに必要な情報を追加
-    model.addAttribute("userHand", choice);
+    // 勝敗の判定ロジック
+    if (hand.equals(cpuHand)) {
+      result = "引き分け";
+    } else if ((hand.equals("rock") && cpuHand.equals("scissors")) ||
+        (hand.equals("scissors") && cpuHand.equals("paper")) ||
+        (hand.equals("paper") && cpuHand.equals("rock"))) {
+      result = "勝ち";
+    } else {
+      result = "負け";
+    }
+
+    model.addAttribute("yourHand", hand);
     model.addAttribute("cpuHand", cpuHand);
     model.addAttribute("result", result);
 
-    return "janken";
+    return "janken.html"; // 結果を janken.html に表示
   }
 }
