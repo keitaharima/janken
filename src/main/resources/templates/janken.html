@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>じゃんけんゲーム</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Janken</title>
 </head>
 
 <body>
-  <h1 th:if="${username != null}">Hi <span th:text="${username}">ユーザー名</span>!</h1>
+  <h1>Welcome, <span th:text="${username}">User</span>!</h1>
 
-  <h2>じゃんけんの手を選んでください</h2>
-  <ul>
-    <li><a href="/janken/play?choice=rock">グー</a></li>
-    <li><a href="/janken/play?choice=scissors">チョキ</a></li>
-    <li><a href="/janken/play?choice=paper">パー</a></li>
-  </ul>
+  <h2>じゃんけんを選んでください:</h2>
+  <a href="/janken/result?hand=rock">グー</a>
+  <a href="/janken/result?hand=scissors">チョキ</a>
+  <a href="/janken/result?hand=paper">パー</a>
 
-  <div th:if="${result != null}">
-    <p>あなたの手: <span th:text="${userHand}">-</span></p>
-    <p>相手の手: <span th:text="${cpuHand}">-</span></p>
-    <p>結果: <span th:text="${result}">-</span></p>
+  <div th:if="${yourHand != null}">
+    <h3>結果:</h3>
+    <p>あなたの手: <span th:text="${yourHand}">Your Hand</span></p>
+    <p>相手の手: <span th:text="${cpuHand}">CPU Hand</span></p>
+    <p>結果: <span th:text="${result}">Result</span></p>
   </div>
+
+  <form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+  </form>
 </body>
 
 </html>
